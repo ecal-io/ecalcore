@@ -21,7 +21,7 @@
  * @brief  common data publisher based on eCAL
 **/
 
-#if ECAL_CORE_PUBLISHER
+#if ECALCORE_PUBLISHER
 
 #include <ecal/ecal.h>
 #include <ecal/ecal_config.h>
@@ -240,12 +240,12 @@ namespace eCAL
 
   bool CPublisher::IsSubscribed() const
   {
-#if ECAL_CORE_REGISTRATION
+#if ECALCORE_REGISTRATION
     if(m_datawriter == nullptr) return(false);
     return(m_datawriter->IsSubscribed());
-#else  // ECAL_CORE_REGISTRATION
+#else  // ECALCORE_REGISTRATION
     return(true);
-#endif // ECAL_CORE_REGISTRATION
+#endif // ECALCORE_REGISTRATION
   }
 
   std::string CPublisher::GetTopicName() const
@@ -275,7 +275,7 @@ namespace eCAL
   }
 }
 
-#else // ECAL_CORE_PUBLISHER
+#else // ECALCORE_PUBLISHER
 
 #include <ecal/ecal.h>
 
@@ -401,4 +401,4 @@ namespace eCAL
   }
 }
 
-#endif // ECAL_CORE_PUBLISHER
+#endif // ECALCORE_PUBLISHER

@@ -43,7 +43,7 @@
 #include <pwd.h>
 #endif
 
-#if ECAL_CORE_CONFIG_INIFILE
+#if ECALCORE_CONFIG_INIFILE
 #include <SimpleIni.h>
 #endif
 
@@ -278,7 +278,7 @@ namespace eCAL
   ////////////////////////////////////////////////////////
   // CConfigImpl
   ////////////////////////////////////////////////////////
-#if ECAL_CORE_CONFIG_INIFILE
+#if ECALCORE_CONFIG_INIFILE
 
   class CConfigImpl : public CSimpleIni
   {
@@ -342,7 +342,7 @@ namespace eCAL
     std::vector<std::string> m_overwrite_keys;
   };
 
-#else // ECAL_CORE_CONFIG_INIFILE
+#else // ECALCORE_CONFIG_INIFILE
 
   class CConfigImpl
   {
@@ -358,7 +358,7 @@ namespace eCAL
     double GetDoubleValue(const std::string& /*section_*/, const std::string& /*key_*/, double default_)            { return default_; }
   };
 
-#endif // ECAL_CORE_CONFIG_INIFILE
+#endif // ECALCORE_CONFIG_INIFILE
 
   ////////////////////////////////////////////////////////
   // CConfigBase

@@ -70,7 +70,7 @@ namespace eCAL
     return(g_globals()->log().get());
   }
 
-#if ECAL_CORE_TIMEPLUGIN
+#if ECALCORE_TIMEPLUGIN
   CTimeGate* g_timegate()
   {
     if (g_globals() == nullptr) return(nullptr);
@@ -78,7 +78,7 @@ namespace eCAL
   }
 #endif
 
-#if ECAL_CORE_REGISTRATION
+#if ECALCORE_REGISTRATION
   CRegistrationProvider* g_registration_provider()
   {
     if (g_globals() == nullptr) return(nullptr);
@@ -92,7 +92,7 @@ namespace eCAL
   }
 #endif
 
-#if ECAL_CORE_SUBSCRIBER
+#if ECALCORE_SUBSCRIBER
   CSubGate* g_subgate()
   {
     if (g_globals() == nullptr) return(nullptr);
@@ -100,7 +100,7 @@ namespace eCAL
   }
 #endif
 
-#if ECAL_CORE_PUBLISHER
+#if ECALCORE_PUBLISHER
   CPubGate* g_pubgate()
   {
     if (g_globals() == nullptr) return(nullptr);
@@ -108,7 +108,7 @@ namespace eCAL
   }
 #endif
 
-#if ECAL_CORE_SERVICE
+#if ECALCORE_SERVICE
   CServiceGate* g_servicegate()
   {
     if (g_globals() == nullptr) return(nullptr);
@@ -122,7 +122,7 @@ namespace eCAL
   }
 #endif
 
-#if defined(ECAL_CORE_REGISTRATION_SHM) || defined(ECAL_CORE_TRANSPORT_SHM)
+#if defined(ECALCORE_REGISTRATION_SHM) || defined(ECALCORE_TRANSPORT_SHM)
   CMemFileThreadPool* g_memfile_pool()
   {
     if (g_globals() == nullptr) return(nullptr);

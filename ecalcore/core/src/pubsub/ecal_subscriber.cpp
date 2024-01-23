@@ -21,7 +21,7 @@
  * @brief  common data subscriber for eCAL
 **/
 
-#if ECAL_CORE_SUBSCRIBER
+#if ECALCORE_SUBSCRIBER
 
 #include <ecal/ecal.h>
 
@@ -229,7 +229,7 @@ namespace eCAL
   }
 }
 
-#else // ECAL_CORE_SUBSCRIBER
+#else // ECALCORE_SUBSCRIBER
 
 #include <ecal/ecal.h>
 
@@ -330,4 +330,4 @@ namespace eCAL
   }
 }
 
-#endif // ECAL_CORE_SUBSCRIBER
+#endif // ECALCORE_SUBSCRIBER

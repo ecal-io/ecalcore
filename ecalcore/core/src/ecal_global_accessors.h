@@ -34,24 +34,24 @@ namespace eCAL
   class  CGlobals;
   class  CConfig;
   class  CLog;
-#if ECAL_CORE_TIMEPLUGIN
+#if ECALCORE_TIMEPLUGIN
   class  CTimeGate;
 #endif
-#if ECAL_CORE_REGISTRATION
+#if ECALCORE_REGISTRATION
   class  CRegistrationProvider;
   class  CRegistrationReceiver;
 #endif
-#if ECAL_CORE_SUBSCRIBER
+#if ECALCORE_SUBSCRIBER
   class  CSubGate;
 #endif
-#if ECAL_CORE_PUBLISHER
+#if ECALCORE_PUBLISHER
   class  CPubGate;
 #endif
-#if ECAL_CORE_SERVICE
+#if ECALCORE_SERVICE
   class  CServiceGate;
   class  CClientGate;
 #endif
-#if defined(ECAL_CORE_REGISTRATION_SHM) || defined(ECAL_CORE_TRANSPORT_SHM)
+#if defined(ECALCORE_REGISTRATION_SHM) || defined(ECALCORE_TRANSPORT_SHM)
   class  CMemFileThreadPool;
   class  CMemFileMap;
 #endif
@@ -60,24 +60,24 @@ namespace eCAL
   CGlobals*               g_globals();
   CConfig*                g_config();
   CLog*                   g_log();
-#if ECAL_CORE_TIMEPLUGIN
+#if ECALCORE_TIMEPLUGIN
   CTimeGate*              g_timegate();
 #endif
-#if ECAL_CORE_REGISTRATION
+#if ECALCORE_REGISTRATION
   CRegistrationProvider*  g_registration_provider();
   CRegistrationReceiver*  g_registration_receiver();
 #endif
-#if ECAL_CORE_SUBSCRIBER
+#if ECALCORE_SUBSCRIBER
   CSubGate*               g_subgate();
 #endif
-#if ECAL_CORE_PUBLISHER
+#if ECALCORE_PUBLISHER
   CPubGate*               g_pubgate();
 #endif
-#if ECAL_CORE_SERVICE
+#if ECALCORE_SERVICE
   CServiceGate*           g_servicegate();
   CClientGate*            g_clientgate();
 #endif
-#if defined(ECAL_CORE_REGISTRATION_SHM) || defined(ECAL_CORE_TRANSPORT_SHM)
+#if defined(ECALCORE_REGISTRATION_SHM) || defined(ECALCORE_TRANSPORT_SHM)
   CMemFileThreadPool*     g_memfile_pool();
   CMemFileMap*            g_memfile_map();
 #endif

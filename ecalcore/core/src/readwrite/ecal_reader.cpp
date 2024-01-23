@@ -24,22 +24,22 @@
 #include <ecal/ecal.h>
 #include <ecal/ecal_config.h>
 
-#if ECAL_CORE_REGISTRATION
+#if ECALCORE_REGISTRATION
 #include "registration/ecal_registration_provider.h"
 #endif
 #include "ecal_reader.h"
 #include "ecal_global_accessors.h"
 #include "ecal_reader_layer.h"
 
-#if ECAL_CORE_TRANSPORT_UDP
+#if ECALCORE_TRANSPORT_UDP
 #include "udp/ecal_reader_udp_mc.h"
 #endif
 
-#if ECAL_CORE_TRANSPORT_SHM
+#if ECALCORE_TRANSPORT_SHM
 #include "shm/ecal_reader_shm.h"
 #endif
 
-#if ECAL_CORE_TRANSPORT_TCP
+#if ECALCORE_TRANSPORT_TCP
 #include "tcp/ecal_reader_tcp.h"
 #endif
 
@@ -173,7 +173,7 @@ namespace eCAL
   void CDataReader::InitializeLayers()
   {
     // initialize udp multicast layer
-#if ECAL_CORE_TRANSPORT_UDP
+#if ECALCORE_TRANSPORT_UDP
     if (Config::IsUdpMulticastRecEnabled())
     {
       CUDPReaderLayer::Get()->Initialize();
@@ -181,7 +181,7 @@ namespace eCAL
 #endif
 
     // initialize tcp layer
-#if ECAL_CORE_TRANSPORT_TCP
+#if ECALCORE_TRANSPORT_TCP
     if (Config::IsTcpRecEnabled())
     {
       CTCPReaderLayer::Get()->Initialize();
@@ -192,7 +192,7 @@ namespace eCAL
   void CDataReader::SubscribeToLayers()
   {
     // subscribe topic to udp multicast layer
-#if ECAL_CORE_TRANSPORT_UDP
+#if ECALCORE_TRANSPORT_UDP
     if (Config::IsUdpMulticastRecEnabled())
     {
       CUDPReaderLayer::Get()->AddSubscription(m_host_name, m_topic_name, m_topic_id);
@@ -200,7 +200,7 @@ namespace eCAL
 #endif
 
     // subscribe topic to tcp layer
-#if ECAL_CORE_TRANSPORT_TCP
+#if ECALCORE_TRANSPORT_TCP
     if (Config::IsTcpRecEnabled())
     {
       CTCPReaderLayer::Get()->AddSubscription(m_host_name, m_topic_name, m_topic_id);
@@ -211,7 +211,7 @@ namespace eCAL
   void CDataReader::UnsubscribeFromLayers()
   {
     // unsubscribe topic from udp multicast layer
-#if ECAL_CORE_TRANSPORT_UDP
+#if ECALCORE_TRANSPORT_UDP
     if (Config::IsUdpMulticastRecEnabled())
     {
       CUDPReaderLayer::Get()->RemSubscription(m_host_name, m_topic_name, m_topic_id);
@@ -219,7 +219,7 @@ namespace eCAL
 #endif
 
     // unsubscribe topic from tcp multicast layer
-#if ECAL_CORE_TRANSPORT_TCP
+#if ECALCORE_TRANSPORT_TCP
     if (Config::IsTcpRecEnabled())
     {
       CTCPReaderLayer::Get()->RemSubscription(m_host_name, m_topic_name, m_topic_id);
@@ -229,7 +229,7 @@ namespace eCAL
 
   bool CDataReader::Register(const bool force_)
   {
-#if ECAL_CORE_REGISTRATION
+#if ECALCORE_REGISTRATION
     if(m_topic_name.empty()) return(false);
 
     // create command parameter
@@ -259,7 +259,7 @@ namespace eCAL
     ecal_reg_sample_topic.attr  = m_attr;
     ecal_reg_sample_topic.tsize = static_cast<int32_t>(m_topic_size);
 
-#if ECAL_CORE_TRANSPORT_UDP
+#if ECALCORE_TRANSPORT_UDP
     // udp multicast layer
     {
       Registration::TLayer udp_tlayer;
@@ -270,7 +270,7 @@ namespace eCAL
     }
 #endif
 
-#if ECAL_CORE_TRANSPORT_SHM
+#if ECALCORE_TRANSPORT_SHM
     // shm layer
     {
       Registration::TLayer shm_tlayer;
@@ -281,7 +281,7 @@ namespace eCAL
     }
 #endif
 
-#if ECAL_CORE_TRANSPORT_TCP
+#if ECALCORE_TRANSPORT_TCP
     // tcp layer
     {
       Registration::TLayer tcp_tlayer;
@@ -310,13 +310,13 @@ namespace eCAL
     Logging::Log(log_level_debug4, m_topic_name + "::CDataReader::DoRegister");
 #endif
 
-#endif // ECAL_CORE_REGISTRATION
+#endif // ECALCORE_REGISTRATION
     return(true);
   }
 
   bool CDataReader::Unregister()
   {
-#if ECAL_CORE_REGISTRATION
+#if ECALCORE_REGISTRATION
     if (m_topic_name.empty()) return(false);
 
     // create command parameter
@@ -338,7 +338,7 @@ namespace eCAL
     Logging::Log(log_level_debug4, m_topic_name + "::CDataReader::Unregister");
 #endif
 
-#endif // ECAL_CORE_REGISTRATION
+#endif // ECALCORE_REGISTRATION
     return(true);
   }
 
@@ -667,12 +667,12 @@ namespace eCAL
     switch (type_)
     {
     case tl_ecal_shm:
-#if ECAL_CORE_TRANSPORT_SHM
+#if ECALCORE_TRANSPORT_SHM
       CSHMReaderLayer::Get()->SetConnectionParameter(par);
 #endif
       break;
     case tl_ecal_tcp:
-#if ECAL_CORE_TRANSPORT_TCP
+#if ECALCORE_TRANSPORT_TCP
       CTCPReaderLayer::Get()->SetConnectionParameter(par);
 #endif
       break;
@@ -687,7 +687,7 @@ namespace eCAL
     switch (type_)
     {
     case tl_ecal_tcp:
-#if ECAL_CORE_TRANSPORT_TCP
+#if ECALCORE_TRANSPORT_TCP
     {
         SReaderLayerPar par;
         par.host_name  = host_name_;

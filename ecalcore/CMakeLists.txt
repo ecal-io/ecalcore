@@ -23,12 +23,12 @@ add_subdirectory(core)
 add_subdirectory(core/cfg)
 
 # Add ecal services
-if(ECAL_CORE_SERVICE)
+if(ECALCORE_SERVICE)
   add_subdirectory(service)
 endif()
 
 # Add ecal time plugins
-if(ECAL_CORE_TIMEPLUGIN)
+if(ECALCORE_TIMEPLUGIN)
   add_subdirectory(time)
 endif()
 

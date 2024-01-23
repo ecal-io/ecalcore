@@ -31,70 +31,70 @@ message(STATUS "Prefix Path: ${CMAKE_PREFIX_PATH}")
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # configurable build options
-# command line usage: cmake .. -DBUILD_SAMPLES=ON -DBUILD_ECAL_TESTS=OFF -DECAL_CORE_CONFIG_INIFILE=OFF
+# command line usage: cmake .. -DECALCORE_BUILD_SAMPLES=ON -DECALCORE_BUILD_ECAL_TESTS=OFF -DECALCORE_CONFIG_INIFILE=OFF
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # additional builds (adapt to your needs)
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------
-option(BUILD_SAMPLES                                     "Build the eCAL samples"                                                                               OFF)
-option(BUILD_SAMPLES_PROTOBUF                            "Build the eCAL samples using google protobuf message definition"                                      OFF)
-option(BUILD_ECAL_TESTS                                  "Build the eCAL google tests"                                                                          OFF)
-option(BUILD_ECAL_TESTS_PROTOBUF                         "Build the eCAL google tests using google protobuf message definition"                                 OFF)
+option(ECALCORE_BUILD_SAMPLES                            "Build the eCAL samples"                                                                               OFF)
+option(ECALCORE_BUILD_SAMPLES_PROTOBUF                   "Build the eCAL samples using google protobuf message definition"                                      OFF)
+option(ECALCORE_BUILD_ECAL_TESTS                         "Build the eCAL google tests"                                                                          OFF)
+option(ECALCORE_BUILD_ECAL_TESTS_PROTOBUF                "Build the eCAL google tests using google protobuf message definition"                                 OFF)
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # core internal feature configuration (adapt to your needs)
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------
-option(ECAL_CORE_CONFIG_INIFILE                          "Enables to configure eCAL via ecal.ini file"                                                          OFF)
-option(ECAL_CORE_COMMAND_LINE                            "Enables eCAL application cmd line interfaces"                                                         OFF)
-option(ECAL_CORE_REGISTRATION                            "Enables the eCAL registration layer"                                                                   ON)
-option(ECAL_CORE_PUBLISHER                               "Enables the eCAL publisher functionality"                                                              ON)
-option(ECAL_CORE_SUBSCRIBER                              "Enables the eCAL subscriber functionality"                                                             ON)
-option(ECAL_CORE_SERVICE                                 "Enables the eCAL server/client functionality"                                                         OFF)
-option(ECAL_CORE_TIMEPLUGIN                              "Enables the eCAL time plugin functionality"                                                           OFF)
+option(ECALCORE_CONFIG_INIFILE                          "Enables to configure eCAL via ecal.ini file"                                                           OFF)
+option(ECALCORE_COMMAND_LINE                            "Enables eCAL application cmd line interfaces"                                                          OFF)
+option(ECALCORE_REGISTRATION                            "Enables the eCAL registration layer"                                                                    ON)
+option(ECALCORE_PUBLISHER                               "Enables the eCAL publisher functionality"                                                               ON)
+option(ECALCORE_SUBSCRIBER                              "Enables the eCAL subscriber functionality"                                                              ON)
+option(ECALCORE_SERVICE                                 "Enables the eCAL server/client functionality"                                                          OFF)
+option(ECALCORE_TIMEPLUGIN                              "Enables the eCAL time plugin functionality"                                                            OFF)
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # core registration layer options (change with care)
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------
-option(ECAL_CORE_REGISTRATION_SHM                        "Enables the eCAL registration layer over shared memory"                                               OFF)
+option(ECALCORE_REGISTRATION_SHM                        "Enables the eCAL registration layer over shared memory"                                                OFF)
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # core transport layer options (change with care)
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------
-option(ECAL_CORE_TRANSPORT_UDP                           "Enables the eCAL to transport payload via UDP multicast"                                               ON)
-option(ECAL_CORE_TRANSPORT_TCP                           "Enables the eCAL to transport payload via TCP"                                                        OFF)
-option(ECAL_CORE_TRANSPORT_SHM                           "Enables the eCAL to transport payload via local shared memory"                                        OFF)
+option(ECALCORE_TRANSPORT_UDP                           "Enables the eCAL to transport payload via UDP multicast"                                                ON)
+option(ECALCORE_TRANSPORT_TCP                           "Enables the eCAL to transport payload via TCP"                                                         OFF)
+option(ECALCORE_TRANSPORT_SHM                           "Enables the eCAL to transport payload via local shared memory"                                         OFF)
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # third party library options (do not change)
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------
-option(ECAL_THIRDPARTY_BUILD_ASIO                        "Build asio with eCAL"                                                                                  ON)
-option(ECAL_THIRDPARTY_BUILD_CMAKEFUNCTIONS              "Build CMakeFunctions with eCAL"                                                                        ON)
-option(ECAL_CORE_NPCAP_SUPPORT                           "Enable the eCAL Npcap Receiver (i.e. the Win10 performance fix)"                                      OFF)
+option(ECALCORE_THIRDPARTY_BUILD_ASIO                   "Build asio with eCAL"                                                                                   ON)
+option(ECALCORE_THIRDPARTY_BUILD_CMAKEFUNCTIONS         "Build CMakeFunctions with eCAL"                                                                         ON)
+option(ECALCORE_NPCAP_SUPPORT                           "Enable the eCAL Npcap Receiver (i.e. the Win10 performance fix)"                                       OFF)
 
-cmake_dependent_option(ECAL_THIRDPARTY_BUILD_GTEST       "Build gtest with eCAL"               ON   "BUILD_ECAL_TESTS"                                          OFF)
-cmake_dependent_option(ECAL_THIRDPARTY_BUILD_TCP_PUBSUB  "Build tcp_pubsub library with eCAL"  ON   "ECAL_CORE_TRANSPORT_TCP"                                   OFF)
-cmake_dependent_option(ECAL_THIRDPARTY_BUILD_RECYCLE     "Build steinwurf::recylce with eCAL"  ON   "ECAL_CORE_TRANSPORT_TCP"                                   OFF)
-cmake_dependent_option(ECAL_THIRDPARTY_BUILD_SIMPLEINI   "Build simpleini with eCAL"           ON   "ECAL_CORE_CONFIG_INIFILE"                                  OFF)
-cmake_dependent_option(ECAL_THIRDPARTY_BUILD_TCLAP       "Build tclap library with eCAL"       ON   "ECAL_CORE_COMMAND_LINE"                                    OFF)
+cmake_dependent_option(ECAL_THIRDPARTY_BUILD_GTEST       "Build gtest with eCAL"               ON   "ECALCORE_BUILD_ECAL_TESTS"                                 OFF)
+cmake_dependent_option(ECAL_THIRDPARTY_BUILD_TCP_PUBSUB  "Build tcp_pubsub library with eCAL"  ON   "ECALCORE_TRANSPORT_TCP"                                    OFF)
+cmake_dependent_option(ECAL_THIRDPARTY_BUILD_RECYCLE     "Build steinwurf::recylce with eCAL"  ON   "ECALCORE_TRANSPORT_TCP"                                    OFF)
+cmake_dependent_option(ECAL_THIRDPARTY_BUILD_SIMPLEINI   "Build simpleini with eCAL"           ON   "ECALCORE_CONFIG_INIFILE"                                   OFF)
+cmake_dependent_option(ECAL_THIRDPARTY_BUILD_TCLAP       "Build tclap library with eCAL"       ON   "ECALCORE_COMMAND_LINE"                                     OFF)
 
 if(WIN32)
-  cmake_dependent_option(ECAL_THIRDPARTY_BUILD_PROTOBUF  "Build protobuf with eCAL"           OFF   "NOT BUILD_SAMPLES_PROTOBUF; NOT BUILD_ECAL_TESTS_PROTOBUF"  ON)
+  cmake_dependent_option(ECALCORE_THIRDPARTY_BUILD_PROTOBUF  "Build protobuf with eCAL"       OFF   "NOT ECALCORE_BUILD_SAMPLES_PROTOBUF; NOT ECALCORE_BUILD_ECAL_TESTS_PROTOBUF"  ON)
 else()
-  option(ECAL_CORE_NPCAP_SUPPORT                         "Enable the eCAL Npcap Receiver (i.e. the Win10 performance fix)"                                      OFF)
-  option(ECAL_THIRDPARTY_BUILD_PROTOBUF                  "Build protobuf with eCAL"                                                                             OFF)
+  option(ECALCORE_NPCAP_SUPPORT                          "Enable the eCAL Npcap Receiver (i.e. the Win10 performance fix)"                                      OFF)
+  option(ECALCORE_THIRDPARTY_BUILD_PROTOBUF              "Build protobuf with eCAL"                                                                             OFF)
 endif()
 
-cmake_dependent_option(ECAL_THIRDPARTY_BUILD_UDPCAP      "Build udpcap library with eCAL"      ON   "ECAL_CORE_NPCAP_SUPPORT"                                   OFF)
+cmake_dependent_option(ECAL_THIRDPARTY_BUILD_UDPCAP      "Build udpcap library with eCAL"      ON   "ECALCORE_NPCAP_SUPPORT"                                    OFF)
 
-if(NOT ECAL_CORE_REGISTRATION)
-  if(ECAL_CORE_TRANSPORT_TCP)
-    message(STATUS "Switching ECAL_CORE_TRANSPORT_TCP to OFF because registration (ECAL_CORE_REGISTRATION) is not activated")
-	set(ECAL_CORE_TRANSPORT_TCP OFF)
+if(NOT ECALCORE_REGISTRATION)
+  if(ECALCORE_TRANSPORT_TCP)
+    message(STATUS "Switching ECALCORE_TRANSPORT_TCP to OFF because registration (ECALCORE_REGISTRATION) is not activated")
+	set(ECALCORE_TRANSPORT_TCP OFF)
   endif()
-  if(ECAL_CORE_TRANSPORT_SHM)
-    message(STATUS "Switching ECAL_CORE_TRANSPORT_SHM to OFF because registration (ECAL_CORE_REGISTRATION) is not activated")
-	set(ECAL_CORE_TRANSPORT_SHM OFF)
+  if(ECALCORE_TRANSPORT_SHM)
+    message(STATUS "Switching ECALCORE_TRANSPORT_SHM to OFF because registration (ECALCORE_REGISTRATION) is not activated")
+	set(ECALCORE_TRANSPORT_SHM OFF)
   endif()
 endif()
 
@@ -104,7 +104,7 @@ set(CMAKE_MINSIZEREL_POSTFIX       minsize)
 set(CMAKE_RELWITHDEBINFO_POSTFIX   reldbg)
 
 # Use builtin asio
-if (ECAL_THIRDPARTY_BUILD_ASIO)
+if (ECALCORE_THIRDPARTY_BUILD_ASIO)
     include("${CMAKE_CURRENT_LIST_DIR}/thirdparty/build-asio.cmake")
 endif()
 

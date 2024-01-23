@@ -69,9 +69,9 @@ jobs:
                  -T ${{ env.VS_TOOLSET }} ^
                  -DECALCORE_BUILD_SAMPLES=ON ^
                  -DECALCORE_BUILD_TESTS=ON ^
-                 -DECALCORE_USE_BUILTIN_ASIO=ON ^
-                 -DECALCORE_USE_BUILTIN_RECYCLE=ON ^
-                 -DECALCORE_USE_BUILTIN_GTEST=ON ^
+#                 -DECALCORE_USE_BUILTIN_ASIO=ON ^
+#                 -DECALCORE_USE_BUILTIN_RECYCLE=ON ^
+#                 -DECALCORE_USE_BUILTIN_GTEST=ON ^
                  -DECALCORE_LIBRARY_TYPE=${{env.ecalcore_library_type}} ^
                  -DCMAKE_INSTALL_PREFIX=${{env.INSTALL_PREFIX}} ^
                  -DBUILD_SHARED_LIBS=${{ env.build_shared_libs }}

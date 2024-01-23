@@ -24,23 +24,23 @@
 #pragma once
 
 #include "ecal_global_accessors.h"
-#if ECAL_CORE_REGISTRATION
+#if ECALCORE_REGISTRATION
 #include "registration/ecal_registration_provider.h"
 #include "registration/ecal_registration_receiver.h"
 #endif 
 #include "time/ecal_timegate.h"
 #include "logging/ecal_log_impl.h"
-#if ECAL_CORE_PUBLISHER
+#if ECALCORE_PUBLISHER
 #include "pubsub/ecal_pubgate.h"
 #endif
-#if ECAL_CORE_SUBSCRIBER
+#if ECALCORE_SUBSCRIBER
 #include "pubsub/ecal_subgate.h"
 #endif
-#if defined(ECAL_CORE_REGISTRATION_SHM) || defined(ECAL_CORE_TRANSPORT_SHM)
+#if defined(ECALCORE_REGISTRATION_SHM) || defined(ECALCORE_TRANSPORT_SHM)
 #include "io/shm/ecal_memfile_pool.h"
 #include "io/shm/ecal_memfile_db.h"
 #endif
-#if ECAL_CORE_SERVICE
+#if ECALCORE_SERVICE
 #include "service/ecal_servicegate.h"
 #include "service/ecal_clientgate.h"
 #endif
@@ -64,24 +64,24 @@ namespace eCAL
 
     const std::unique_ptr<CConfig>&                                       config()                 { return config_instance; };
     const std::unique_ptr<CLog>&                                          log()                    { return log_instance; };
-#if ECAL_CORE_TIMEPLUGIN
+#if ECALCORE_TIMEPLUGIN
     const std::unique_ptr<CTimeGate>&                                     timegate()               { return timegate_instance; };
 #endif
-#if ECAL_CORE_SUBSCRIBER
+#if ECALCORE_SUBSCRIBER
     const std::unique_ptr<CSubGate>&                                      subgate()                { return subgate_instance; };
 #endif
-#if ECAL_CORE_PUBLISHER
+#if ECALCORE_PUBLISHER
     const std::unique_ptr<CPubGate>&                                      pubgate()                { return pubgate_instance; };
 #endif
-#if ECAL_CORE_SERVICE
+#if ECALCORE_SERVICE
     const std::unique_ptr<CServiceGate>&                                  servicegate()            { return servicegate_instance; };
     const std::unique_ptr<CClientGate>&                                   clientgate()             { return clientgate_instance; };
 #endif
-#if ECAL_CORE_REGISTRATION
+#if ECALCORE_REGISTRATION
     const std::unique_ptr<CRegistrationProvider>&                         registration_provider()  { return registration_provider_instance; };
     const std::unique_ptr<CRegistrationReceiver>&                         registration_receiver()  { return registration_receiver_instance; };
 #endif
-#if defined(ECAL_CORE_REGISTRATION_SHM) || defined(ECAL_CORE_TRANSPORT_SHM)
+#if defined(ECALCORE_REGISTRATION_SHM) || defined(ECALCORE_TRANSPORT_SHM)
     const std::unique_ptr<CMemFileThreadPool>&                            memfile_pool()           { return memfile_pool_instance; };
     const std::unique_ptr<CMemFileMap>&                                   memfile_map()            { return memfile_map_instance; };
 #endif
@@ -91,24 +91,24 @@ namespace eCAL
     unsigned int                                                          components;
     std::unique_ptr<CConfig>                                              config_instance;
     std::unique_ptr<CLog>                                                 log_instance;
-#if ECAL_CORE_TIMEPLUGIN
+#if ECALCORE_TIMEPLUGIN
     std::unique_ptr<CTimeGate>                                            timegate_instance;
 #endif
-#if ECAL_CORE_SUBSCRIBER
+#if ECALCORE_SUBSCRIBER
     std::unique_ptr<CSubGate>                                             subgate_instance;
 #endif
-#if ECAL_CORE_PUBLISHER
+#if ECALCORE_PUBLISHER
     std::unique_ptr<CPubGate>                                             pubgate_instance;
 #endif
-#if ECAL_CORE_SERVICE
+#if ECALCORE_SERVICE
     std::unique_ptr<CServiceGate>                                         servicegate_instance;
     std::unique_ptr<CClientGate>                                          clientgate_instance;
 #endif
-#if ECAL_CORE_REGISTRATION
+#if ECALCORE_REGISTRATION
     std::unique_ptr<CRegistrationProvider>                                registration_provider_instance;
     std::unique_ptr<CRegistrationReceiver>                                registration_receiver_instance;
 #endif
-#if defined(ECAL_CORE_REGISTRATION_SHM) || defined(ECAL_CORE_TRANSPORT_SHM)
+#if defined(ECALCORE_REGISTRATION_SHM) || defined(ECALCORE_TRANSPORT_SHM)
     std::unique_ptr<CMemFileThreadPool>                                   memfile_pool_instance;
     std::unique_ptr<CMemFileMap>                                          memfile_map_instance;
 #endif

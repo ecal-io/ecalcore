@@ -18,29 +18,29 @@
 
 cmake_minimum_required(VERSION 3.13)
 
-if(BUILD_ECAL_TESTS)
+if(ECALCORE_BUILD_ECAL_TESTS)
 
   enable_testing()
   add_subdirectory(expmap_test)
   add_subdirectory(topic2mcast_test)
   add_subdirectory(util_test)
 
-  if(ECAL_CORE_REGISTRATION_SHM OR ECAL_CORE_TRANSPORT_SHM)
+  if(ECALCORE_REGISTRATION_SHM OR ECALCORE_TRANSPORT_SHM)
     add_subdirectory(io_memfile_test)
   endif()
 
-  if(ECAL_CORE_PUBLISHER AND ECAL_CORE_SUBSCRIBER)
+  if(ECALCORE_PUBLISHER AND ECALCORE_SUBSCRIBER)
     add_subdirectory(core_test)
     add_subdirectory(pubsub_test)
     add_subdirectory(serialization_test)
-    if(BUILD_ECAL_TESTS_PROTOBUF)
+    if(ECALCORE_BUILD_ECAL_TESTS_PROTOBUF)
       add_subdirectory(pubsub_proto_test)
     endif()
   endif()
 
-  if(ECAL_CORE_SERVICE)
+  if(ECALCORE_SERVICE)
     add_subdirectory(clientserver_test)
-    if(BUILD_ECAL_TESTS_PROTOBUF)
+    if(ECALCORE_BUILD_ECAL_TESTS_PROTOBUF)
       add_subdirectory(clientserver_proto_test)
     endif()
   endif()

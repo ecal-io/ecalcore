@@ -28,7 +28,7 @@
 #include "ecal_def.h"
 #include "config/ecal_config_reader_hlp.h"
 
-#if ECAL_CORE_REGISTRATION
+#if ECALCORE_REGISTRATION
 #include "registration/ecal_registration_provider.h"
 #endif
 
@@ -87,13 +87,13 @@ namespace eCAL
     m_created(false)
   {
     // initialize layer modes with configuration settings
-#if ECAL_CORE_TRANSPORT_UDP
+#if ECALCORE_TRANSPORT_UDP
     m_writer.udp_mc_mode.requested = Config::GetPublisherUdpMulticastMode();
 #endif
-#if ECAL_CORE_TRANSPORT_SHM
+#if ECALCORE_TRANSPORT_SHM
     m_writer.shm_mode.requested    = Config::GetPublisherShmMode();
 #endif
-#if ECAL_CORE_TRANSPORT_TCP
+#if ECALCORE_TRANSPORT_TCP
     m_writer.tcp_mode.requested    = Config::GetPublisherTcpMode();
 #endif
   }
@@ -175,17 +175,17 @@ namespace eCAL
 #endif
 
     // destroy udp multicast writer
-#if ECAL_CORE_TRANSPORT_UDP
+#if ECALCORE_TRANSPORT_UDP
     m_writer.udp_mc.Destroy();
 #endif
 
     // destroy memory file writer
-#if ECAL_CORE_TRANSPORT_SHM
+#if ECALCORE_TRANSPORT_SHM
     m_writer.shm.Destroy();
 #endif
 
     // destroy tcp writer
-#if ECAL_CORE_TRANSPORT_TCP
+#if ECALCORE_TRANSPORT_TCP
     m_writer.tcp.Destroy();
 #endif
 
@@ -323,7 +323,7 @@ namespace eCAL
 
   bool CDataWriter::ShmSetBufferCount(size_t buffering_)
   {
-#if ECAL_CORE_TRANSPORT_SHM
+#if ECALCORE_TRANSPORT_SHM
     if (buffering_ < 1)
     {
       Logging::Log(log_level_error, m_topic_name + "::CDataWriter::ShmSetBufferCount minimal number of memory files is 1 !");
@@ -345,7 +345,7 @@ namespace eCAL
 
   bool CDataWriter::ShmEnableZeroCopy(bool state_)
   {
-#if ECAL_CORE_TRANSPORT_SHM
+#if ECALCORE_TRANSPORT_SHM
     m_zero_copy = state_;
     return true;
 #else
@@ -355,7 +355,7 @@ namespace eCAL
 
   bool CDataWriter::ShmSetAcknowledgeTimeout(long long acknowledge_timeout_ms_)
   {
-#if ECAL_CORE_TRANSPORT_SHM
+#if ECALCORE_TRANSPORT_SHM
     m_acknowledge_timeout_ms = acknowledge_timeout_ms_;
     return true;
 #else
@@ -437,7 +437,7 @@ namespace eCAL
     ////////////////////////////////////////////////////////////////////////////
     // SHM
     ////////////////////////////////////////////////////////////////////////////
-#if ECAL_CORE_TRANSPORT_SHM
+#if ECALCORE_TRANSPORT_SHM
     if (m_writer.shm_mode.activated)
     {
 #ifndef NDEBUG
@@ -498,12 +498,12 @@ namespace eCAL
       }
 #endif
     }
-#endif // ECAL_CORE_TRANSPORT_SHM
+#endif // ECALCORE_TRANSPORT_SHM
 
     ////////////////////////////////////////////////////////////////////////////
     // UDP (MC)
     ////////////////////////////////////////////////////////////////////////////
-#if ECAL_CORE_TRANSPORT_UDP
+#if ECALCORE_TRANSPORT_UDP
     if (m_writer.udp_mc_mode.activated)
     {
 #ifndef NDEBUG
@@ -514,7 +514,7 @@ namespace eCAL
       // send it
       bool udp_mc_sent(false);
       {
-#if ECAL_CORE_TRANSPORT_SHM
+#if ECALCORE_TRANSPORT_SHM
         // if shared memory layer for local communication is switched off
         // we activate udp message loopback to communicate with local processes too
         const bool loopback = m_writer.shm_mode.requested == TLayer::smode_off;
@@ -557,12 +557,12 @@ namespace eCAL
       }
 #endif
     }
-#endif // ECAL_CORE_TRANSPORT_UDP
+#endif // ECALCORE_TRANSPORT_UDP
 
     ////////////////////////////////////////////////////////////////////////////
     // TCP
     ////////////////////////////////////////////////////////////////////////////
-#if ECAL_CORE_TRANSPORT_TCP
+#if ECALCORE_TRANSPORT_TCP
     if (m_writer.tcp_mode.activated)
     {
 #ifndef NDEBUG
@@ -599,7 +599,7 @@ namespace eCAL
       }
 #endif
     }
-#endif // ECAL_CORE_TRANSPORT_TCP
+#endif // ECALCORE_TRANSPORT_TCP
 
     // return success
     if (written) return payload_buf_size;
@@ -619,13 +619,13 @@ namespace eCAL
     m_loc_subscribed = true;
 
     // add a new local subscription
-#if ECAL_CORE_TRANSPORT_UDP
+#if ECALCORE_TRANSPORT_UDP
     m_writer.udp_mc.AddLocConnection(local_info_.process_id, local_info_.topic_id, reader_par_);
 #endif
-#if ECAL_CORE_TRANSPORT_SHM
+#if ECALCORE_TRANSPORT_SHM
     m_writer.shm.AddLocConnection(local_info_.process_id, local_info_.topic_id, reader_par_);
 #endif
-#if ECAL_CORE_TRANSPORT_TCP
+#if ECALCORE_TRANSPORT_TCP
     m_writer.tcp.AddLocConnection(local_info_.process_id, local_info_.topic_id, reader_par_);
 #endif
 
@@ -644,13 +644,13 @@ namespace eCAL
     }
 
     // remove a local subscription
-#if ECAL_CORE_TRANSPORT_UDP
+#if ECALCORE_TRANSPORT_UDP
     m_writer.udp_mc.RemLocConnection(local_info_.process_id, local_info_.topic_id);
 #endif
-#if ECAL_CORE_TRANSPORT_SHM
+#if ECALCORE_TRANSPORT_SHM
     m_writer.shm.RemLocConnection(local_info_.process_id, local_info_.topic_id);
 #endif
-#if ECAL_CORE_TRANSPORT_TCP
+#if ECALCORE_TRANSPORT_TCP
     m_writer.tcp.RemLocConnection(local_info_.process_id, local_info_.topic_id);
 #endif
 
@@ -673,13 +673,13 @@ namespace eCAL
     m_ext_subscribed = true;
 
     // add a new external subscription
-#if ECAL_CORE_TRANSPORT_UDP
+#if ECALCORE_TRANSPORT_UDP
     m_writer.udp_mc.AddExtConnection(external_info_.host_name, external_info_.process_id, external_info_.topic_id, reader_par_);
 #endif
-#if ECAL_CORE_TRANSPORT_SHM
+#if ECALCORE_TRANSPORT_SHM
     m_writer.shm.AddExtConnection(external_info_.host_name, external_info_.process_id, external_info_.topic_id, reader_par_);
 #endif
-#if ECAL_CORE_TRANSPORT_TCP
+#if ECALCORE_TRANSPORT_TCP
     m_writer.tcp.AddExtConnection(external_info_.host_name, external_info_.process_id, external_info_.topic_id, reader_par_);
 #endif
 
@@ -698,13 +698,13 @@ namespace eCAL
     }
 
     // remove external subscription
-#if ECAL_CORE_TRANSPORT_UDP
+#if ECALCORE_TRANSPORT_UDP
     m_writer.udp_mc.RemExtConnection(external_info_.host_name, external_info_.process_id, external_info_.topic_id);
 #endif
-#if ECAL_CORE_TRANSPORT_SHM
+#if ECALCORE_TRANSPORT_SHM
     m_writer.shm.RemExtConnection(external_info_.host_name, external_info_.process_id, external_info_.topic_id);
 #endif
-#if ECAL_CORE_TRANSPORT_TCP
+#if ECALCORE_TRANSPORT_TCP
     m_writer.tcp.RemExtConnection(external_info_.host_name, external_info_.process_id, external_info_.topic_id);
 #endif
   }
@@ -794,7 +794,7 @@ namespace eCAL
 
   bool CDataWriter::Register(bool force_)
   {
-#if ECAL_CORE_REGISTRATION
+#if ECALCORE_REGISTRATION
     if (m_topic_name.empty()) return(false);
 
     //@Rex: why is the logic different in CDataReader???
@@ -837,7 +837,7 @@ namespace eCAL
     ecal_reg_sample_topic.attr  = m_attr;
     ecal_reg_sample_topic.tsize = static_cast<int32_t>(m_topic_size);
 
-#if ECAL_CORE_TRANSPORT_UDP
+#if ECALCORE_TRANSPORT_UDP
     // udp multicast layer
     {
       eCAL::Registration::TLayer udp_tlayer;
@@ -849,7 +849,7 @@ namespace eCAL
     }
 #endif
 
-#if ECAL_CORE_TRANSPORT_SHM
+#if ECALCORE_TRANSPORT_SHM
     // shm layer
     {
       eCAL::Registration::TLayer shm_tlayer;
@@ -861,7 +861,7 @@ namespace eCAL
     }
 #endif
 
-#if ECAL_CORE_TRANSPORT_TCP
+#if ECALCORE_TRANSPORT_TCP
     // tcp layer
     {
       eCAL::Registration::TLayer tcp_tlayer;
@@ -898,13 +898,13 @@ namespace eCAL
     Logging::Log(log_level_debug4, m_topic_name + "::CDataWriter::Register");
 #endif
 
-#endif // ECAL_CORE_REGISTRATION
+#endif // ECALCORE_REGISTRATION
     return(true);
   }
 
   bool CDataWriter::Unregister()
   {
-#if ECAL_CORE_REGISTRATION
+#if ECALCORE_REGISTRATION
     if (m_topic_name.empty()) return(false);
 
     // create command parameter
@@ -928,7 +928,7 @@ namespace eCAL
     Logging::Log(log_level_debug4, m_topic_name + "::CDataWriter::UnRegister");
 #endif
 
-#endif // ECAL_CORE_REGISTRATION
+#endif // ECALCORE_REGISTRATION
     return(true);
   }
 
@@ -994,7 +994,7 @@ namespace eCAL
 
   void CDataWriter::SetUseUdpMC(TLayer::eSendMode mode_)
   {
-#if ECAL_CORE_TRANSPORT_UDP
+#if ECALCORE_TRANSPORT_UDP
     m_writer.udp_mc_mode.requested = mode_;
     if (!m_created) return;
 
@@ -1021,12 +1021,12 @@ namespace eCAL
       m_writer.udp_mc.Destroy();
       break;
     }
-#endif // ECAL_CORE_TRANSPORT_UDP
+#endif // ECALCORE_TRANSPORT_UDP
   }
 
   void CDataWriter::SetUseShm(TLayer::eSendMode mode_)
   {
-#if ECAL_CORE_TRANSPORT_SHM
+#if ECALCORE_TRANSPORT_SHM
     m_writer.shm_mode.requested = mode_;
     if (!m_created) return;
 
@@ -1053,12 +1053,12 @@ namespace eCAL
       m_writer.shm.Destroy();
       break;
     }
-#endif // ECAL_CORE_TRANSPORT_SHM
+#endif // ECALCORE_TRANSPORT_SHM
   }
 
   void CDataWriter::SetUseTcp(TLayer::eSendMode mode_)
   {
-#if ECAL_CORE_TRANSPORT_TCP
+#if ECALCORE_TRANSPORT_TCP
     m_writer.tcp_mode.requested = mode_;
     if (!m_created) return;
 
@@ -1085,7 +1085,7 @@ namespace eCAL
       m_writer.tcp.Destroy();
       break;
     }
-#endif // ECAL_CORE_TRANSPORT_TCP
+#endif // ECALCORE_TRANSPORT_TCP
   }
 
   bool CDataWriter::CheckWriterModes()
@@ -1096,10 +1096,10 @@ namespace eCAL
      && (m_writer.tcp_mode.requested    == TLayer::smode_off)
       )
     {
-#if ECAL_CORE_TRANSPORT_UDP
+#if ECALCORE_TRANSPORT_UDP
       m_writer.udp_mc_mode.requested = TLayer::smode_auto;
 #endif
-#if ECAL_CORE_TRANSPORT_SHM
+#if ECALCORE_TRANSPORT_SHM
       m_writer.shm_mode.requested    = TLayer::smode_auto;
 #endif
     }
@@ -1113,14 +1113,14 @@ namespace eCAL
       )
     {
       bool new_local_layer(false);
-#if ECAL_CORE_TRANSPORT_UDP
+#if ECALCORE_TRANSPORT_UDP
       if (m_writer.udp_mc_mode.requested != TLayer::smode_on)
       {
         m_writer.udp_mc_mode.requested = TLayer::smode_on;
         new_local_layer = true;
       }
 #else
-  #if ECAL_CORE_TRANSPORT_TCP
+  #if ECALCORE_TRANSPORT_TCP
       if (m_writer.tcp_mode.requested != TLayer::smode_on)
       {
         m_writer.tcp_mode.requested = TLayer::smode_on;
@@ -1149,7 +1149,7 @@ namespace eCAL
       return false;
     }
 
-#if ECAL_CORE_TRANSPORT_UDP
+#if ECALCORE_TRANSPORT_UDP
     ////////////////////////////////////////////////////////////////////////////
     // UDP (MC)
     ////////////////////////////////////////////////////////////////////////////
@@ -1161,7 +1161,7 @@ namespace eCAL
     }
 #endif
 
-#if ECAL_CORE_TRANSPORT_SHM
+#if ECALCORE_TRANSPORT_SHM
     ////////////////////////////////////////////////////////////////////////////
     // SHM
     ////////////////////////////////////////////////////////////////////////////
@@ -1173,7 +1173,7 @@ namespace eCAL
     }
 #endif
 
-#if ECAL_CORE_TRANSPORT_TCP
+#if ECALCORE_TRANSPORT_TCP
     ////////////////////////////////////////////////////////////////////////////
     // TCP
     ////////////////////////////////////////////////////////////////////////////

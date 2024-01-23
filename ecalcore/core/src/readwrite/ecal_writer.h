@@ -31,15 +31,15 @@
 #include "ecal_def.h"
 #include "util/ecal_expmap.h"
 
-#if ECAL_CORE_TRANSPORT_UDP
+#if ECALCORE_TRANSPORT_UDP
 #include "udp/ecal_writer_udp_mc.h"
 #endif
 
-#if ECAL_CORE_TRANSPORT_SHM
+#if ECALCORE_TRANSPORT_SHM
 #include "shm/ecal_writer_shm.h"
 #endif
 
-#if ECAL_CORE_TRANSPORT_TCP
+#if ECALCORE_TRANSPORT_TCP
 #include "tcp/ecal_writer_tcp.h"
 #endif
 
@@ -195,13 +195,13 @@ namespace eCAL
       SWriterMode                          tcp_mode;
       SWriterMode                          shm_mode;
 
-#if ECAL_CORE_TRANSPORT_UDP
+#if ECALCORE_TRANSPORT_UDP
       CDataWriterUdpMC                     udp_mc;
 #endif
-#if ECAL_CORE_TRANSPORT_SHM
+#if ECALCORE_TRANSPORT_SHM
       CDataWriterSHM                       shm;
 #endif
-#if ECAL_CORE_TRANSPORT_TCP
+#if ECALCORE_TRANSPORT_TCP
       CDataWriterTCP                       tcp;
 #endif
     };

@@ -87,7 +87,7 @@ namespace eCAL
       m_registration_receiver = std::make_shared<UDP::CSampleReceiver>(attr, std::bind(&CRegistrationReceiver::HasSample, this, std::placeholders::_1), std::bind(&CRegistrationReceiver::ApplySerializedSample, this, std::placeholders::_1, std::placeholders::_2));
     }
 
-#if ECAL_CORE_REGISTRATION_SHM
+#if ECALCORE_REGISTRATION_SHM
     if (m_use_registration_shm)
     {
       m_memfile_broadcast.Create(Config::Experimental::GetShmMonitoringDomain(), Config::Experimental::GetShmMonitoringQueueSize());
@@ -114,7 +114,7 @@ namespace eCAL
       m_registration_receiver = nullptr;
     }
 
-#if ECAL_CORE_REGISTRATION_SHM
+#if ECALCORE_REGISTRATION_SHM
     if (m_use_registration_shm)
     {
       // stop memfile registration receive thread and unbind reader
@@ -185,7 +185,7 @@ namespace eCAL
       // unregistration event not implemented currently
       if (m_callback_process) m_callback_process(reg_sample.c_str(), static_cast<int>(reg_sample.size()));
       break;
-#if ECAL_CORE_SERVICE
+#if ECALCORE_SERVICE
     case bct_reg_service:
       if (g_clientgate() != nullptr) g_clientgate()->ApplyServiceRegistration(modified_ttype_sample);
       if (m_callback_service) m_callback_service(reg_sample.c_str(), static_cast<int>(reg_sample.size()));
@@ -270,7 +270,7 @@ namespace eCAL
 
   void CRegistrationReceiver::ApplySubscriberRegistration(const Registration::Sample& ecal_sample_)
   {
-#if ECAL_CORE_PUBLISHER
+#if ECALCORE_PUBLISHER
     // process registrations from same host group
     if (IsHostGroupMember(ecal_sample_))
     {
@@ -319,7 +319,7 @@ namespace eCAL
 
   void CRegistrationReceiver::ApplyPublisherRegistration(const Registration::Sample& ecal_sample_)
   {
-#if ECAL_CORE_SUBSCRIBER
+#if ECALCORE_SUBSCRIBER
     // process registrations from same host group 
     if (IsHostGroupMember(ecal_sample_))
     {

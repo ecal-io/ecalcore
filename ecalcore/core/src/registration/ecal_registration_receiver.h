@@ -34,7 +34,7 @@
 #include "io/udp/ecal_udp_sample_receiver.h"
 #include "serialization/ecal_struct_sample_registration.h"
 
-#if ECAL_CORE_REGISTRATION_SHM
+#if ECALCORE_REGISTRATION_SHM
 #include "ecal_registration_receiver_shm.h"
 #endif
 
@@ -87,7 +87,7 @@ namespace eCAL
                                      
     std::shared_ptr<UDP::CSampleReceiver> m_registration_receiver;
 
-#if ECAL_CORE_REGISTRATION_SHM
+#if ECALCORE_REGISTRATION_SHM
     CMemoryFileBroadcast                  m_memfile_broadcast;
     CMemoryFileBroadcastReader            m_memfile_broadcast_reader;
 

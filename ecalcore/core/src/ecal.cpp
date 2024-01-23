@@ -25,7 +25,7 @@
 #include "ecal_globals.h"
 #include "ecal_event.h"
 
-#if ECAL_CORE_COMMAND_LINE
+#if ECALCORE_COMMAND_LINE
 #include "util/advanced_tclap_output.h"
 #endif
 
@@ -100,7 +100,7 @@ namespace eCAL
     bool dump_config(false);
     std::vector<std::string> config_keys;
 
-#if ECAL_CORE_COMMAND_LINE
+#if ECALCORE_COMMAND_LINE
     if ((argc_ > 0) && (argv_ != nullptr))
     {
       // define command line object

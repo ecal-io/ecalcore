@@ -85,7 +85,7 @@ namespace eCAL
       m_reg_sample_snd = std::make_shared<UDP::CSampleSender>(attr);
     }
 
-#if ECAL_CORE_REGISTRATION_SHM
+#if ECALCORE_REGISTRATION_SHM
     if (m_use_registration_shm)
     {
       std::cout << "Shared memory monitoring is enabled (domain: " << Config::Experimental::GetShmMonitoringDomain() << " - queue size: " << Config::Experimental::GetShmMonitoringQueueSize() << ")" << std::endl;
@@ -115,7 +115,7 @@ namespace eCAL
     // destroy registration sample sender
     m_reg_sample_snd.reset();
 
-#if ECAL_CORE_REGISTRATION_SHM
+#if ECALCORE_REGISTRATION_SHM
     if (m_use_registration_shm)
     {
       m_memfile_broadcast_writer.Unbind();
@@ -274,7 +274,7 @@ namespace eCAL
     process_sample_process.state.severity       = static_cast<Registration::eProcessSeverity>(g_process_severity);
     process_sample_process.state.severity_level = static_cast<Registration::eProcessSeverityLevel>(g_process_severity_level);
     process_sample_process.state.info           = g_process_info;
-#if ECAL_CORE_TIMEPLUGIN
+#if ECALCORE_TIMEPLUGIN
     if (g_timegate() == nullptr)
     {
       process_sample_process.tsync_state = Registration::eTSyncState::tsync_none;
@@ -409,7 +409,7 @@ namespace eCAL
       }
     }
 
-#if ECAL_CORE_REGISTRATION_SHM
+#if ECALCORE_REGISTRATION_SHM
     if (m_use_registration_shm)
     {
       const std::lock_guard<std::mutex> lock(m_sample_list_sync);
@@ -425,7 +425,7 @@ namespace eCAL
     if (!m_created) return(false);
     bool return_value{ true };
 
-#if ECAL_CORE_REGISTRATION_SHM
+#if ECALCORE_REGISTRATION_SHM
     if (m_use_registration_shm)
     {
       {
@@ -459,17 +459,17 @@ namespace eCAL
     g_process_wbytes = static_cast<long long>(((double)g_process_wbytes_sum / m_reg_refresh) * 1000.0);
     g_process_wbytes_sum = 0;
 
-#if ECAL_CORE_SUBSCRIBER
+#if ECALCORE_SUBSCRIBER
     // refresh subscriber registration
     if (g_subgate() != nullptr) g_subgate()->RefreshRegistrations();
 #endif
 
-#if ECAL_CORE_PUBLISHER
+#if ECALCORE_PUBLISHER
     // refresh publisher registration
     if (g_pubgate() != nullptr) g_pubgate()->RefreshRegistrations();
 #endif
 
-#if ECAL_CORE_SERVICE
+#if ECALCORE_SERVICE
     // refresh server registration
     if (g_servicegate() != nullptr) g_servicegate()->RefreshRegistrations();
 
@@ -480,7 +480,7 @@ namespace eCAL
     // register process
     RegisterProcess();
 
-#if ECAL_CORE_SERVICE
+#if ECALCORE_SERVICE
     // register server
     RegisterServer();
 

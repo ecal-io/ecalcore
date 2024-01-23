@@ -20,11 +20,11 @@
 add_subdirectory(ecal_service)
 
 # Samples
-if(BUILD_SAMPLES)
+if(ECALCORE_BUILD_SAMPLES)
   add_subdirectory(sample)
 endif()
 
 # Tests
-if(BUILD_ECAL_TESTS)
+if(ECALCORE_BUILD_ECAL_TESTS)
   add_subdirectory(test)
 endif()

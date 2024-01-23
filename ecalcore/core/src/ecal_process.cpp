@@ -166,7 +166,7 @@ namespace eCAL
       sstream << "Multicast join all IFs   : " << (Config::IsUdpMulticastJoinAllIfEnabled() ? "on" : "off") << std::endl;
       sstream << std::endl;
 
-#if ECAL_CORE_TIMEPLUGIN
+#if ECALCORE_TIMEPLUGIN
       sstream << "------------------------- TIME -----------------------------------" << std::endl;
       sstream << "Synchronization realtime : " << Config::GetTimesyncModuleName() << std::endl;
       sstream << "Synchronization replay   : " << eCALPAR(TIME, SYNC_MOD_REPLAY) << std::endl;
@@ -182,7 +182,7 @@ namespace eCAL
       sstream << "Status (Code)            : \"" << status_msg << "\" (" << status_state << ")" << std::endl;
       sstream << std::endl;
 #endif
-#if ECAL_CORE_SUBSCRIBER
+#if ECALCORE_SUBSCRIBER
       sstream << "------------------------- SUBSCRIPTION LAYER DEFAULTS ------------" << std::endl;
       sstream << "Layer Mode UDP MC        : " << LayerMode(Config::IsUdpMulticastRecEnabled()) << std::endl;
       sstream << "Drop out-of-order msgs   : " << (Config::Experimental::GetDropOutOfOrderMessages() ? "on" : "off") << std::endl;
@@ -278,7 +278,7 @@ namespace eCAL
 
     int AddRegistrationCallback(enum eCAL_Registration_Event event_, const RegistrationCallbackT& callback_)
     {
-#if ECAL_CORE_REGISTRATION
+#if ECALCORE_REGISTRATION
       if (g_registration_receiver() == nullptr) return -1;
       if (g_registration_receiver()->AddRegistrationCallback(event_, callback_)) return 0;
 #endif
@@ -287,7 +287,7 @@ namespace eCAL
 
     int RemRegistrationCallback(enum eCAL_Registration_Event event_)
     {
-#if ECAL_CORE_REGISTRATION
+#if ECALCORE_REGISTRATION
       if (g_registration_receiver() == nullptr) return -1;
       if (g_registration_receiver()->RemRegistrationCallback(event_)) return 0;
 #endif

@@ -30,21 +30,21 @@ namespace eCAL
   {
     void EnableLoopback(bool state_)
     {
-#if ECAL_CORE_REGISTRATION
+#if ECALCORE_REGISTRATION
       if (g_registration_receiver() != nullptr) g_registration_receiver()->EnableLoopback(state_);
 #endif
     }
 
     void PubShareType(bool state_)
     {
-#if ECAL_CORE_PUBLISHER
+#if ECALCORE_PUBLISHER
       if (g_pubgate() != nullptr) g_pubgate()->ShareType(state_);
 #endif
     }
 
     void PubShareDescription(bool state_)
     {
-#if ECAL_CORE_PUBLISHER
+#if ECALCORE_PUBLISHER
       if (g_pubgate() != nullptr) g_pubgate()->ShareDescription(state_);
 #endif
     }

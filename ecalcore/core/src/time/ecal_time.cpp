@@ -26,7 +26,7 @@
 #include <chrono>
 #include <thread>
 
-#if ECAL_CORE_TIMEGATE
+#if ECALCORE_TIMEGATE
 #include "ecal_timegate.h"
 #endif
 
@@ -36,7 +36,7 @@ namespace eCAL
   {
     std::string GetName()
     {
-#if ECAL_CORE_TIMEGATE
+#if ECALCORE_TIMEGATE
       if ((g_timegate() != nullptr) && g_timegate()->IsValid())
       {
         return(g_timegate()->GetName());
@@ -47,7 +47,7 @@ namespace eCAL
 
     long long GetMicroSeconds()
     {
-#if ECAL_CORE_TIMEGATE
+#if ECALCORE_TIMEGATE
       if ((g_timegate() != nullptr) && g_timegate()->IsValid())
       {
         return(g_timegate()->GetMicroSeconds());
@@ -59,7 +59,7 @@ namespace eCAL
 
     long long GetNanoSeconds()
     {
-#if ECAL_CORE_TIMEGATE
+#if ECALCORE_TIMEGATE
       if ((g_timegate() != nullptr) && g_timegate()->IsValid())
       {
         return(g_timegate()->GetNanoSeconds());
@@ -71,7 +71,7 @@ namespace eCAL
 
     bool SetNanoSeconds(long long time_)
     {
-#if ECAL_CORE_TIMEGATE
+#if ECALCORE_TIMEGATE
       if ((g_timegate() != nullptr) && g_timegate()->IsValid())
       {
         return(g_timegate()->SetNanoSeconds(time_));
@@ -83,7 +83,7 @@ namespace eCAL
 
     bool IsSynchronized()
     {
-#if ECAL_CORE_TIMEGATE
+#if ECALCORE_TIMEGATE
       if ((g_timegate() != nullptr) && g_timegate()->IsValid())
       {
         return(g_timegate()->IsSynchronized());
@@ -94,7 +94,7 @@ namespace eCAL
 
     bool IsMaster()
     {
-#if ECAL_CORE_TIMEGATE
+#if ECALCORE_TIMEGATE
       if ((g_timegate() != nullptr) && g_timegate()->IsValid())
       {
         return(g_timegate()->IsMaster());
@@ -105,7 +105,7 @@ namespace eCAL
     
     void SleepForNanoseconds(long long duration_nsecs_)
     {
-#if ECAL_CORE_TIMEGATE
+#if ECALCORE_TIMEGATE
       if ((g_timegate() != nullptr) && g_timegate()->IsValid())
       {
         g_timegate()->SleepForNanoseconds(duration_nsecs_);
@@ -115,7 +115,7 @@ namespace eCAL
 
     void GetStatus(int& error_, std::string* const status_message_)
     {
-#if ECAL_CORE_TIMEGATE
+#if ECALCORE_TIMEGATE
       if (g_timegate() == nullptr)
       {
         error_ = -1;

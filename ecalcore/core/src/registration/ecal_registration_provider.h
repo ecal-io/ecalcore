@@ -32,7 +32,7 @@
 
 #include "util/ecal_thread.h"
 
-#if ECAL_CORE_REGISTRATION_SHM
+#if ECALCORE_REGISTRATION_SHM
 #include "shm/ecal_memfile_broadcast.h"
 #include "shm/ecal_memfile_broadcast_writer.h"
 #endif
@@ -103,7 +103,7 @@ namespace eCAL
     std::mutex                          m_client_map_sync;
     SampleMapT                          m_client_map;
 
-#if ECAL_CORE_REGISTRATION_SHM
+#if ECALCORE_REGISTRATION_SHM
     std::mutex                          m_sample_list_sync;
     Registration::SampleList            m_sample_list;
     std::vector<char>                   m_sample_list_buffer;

@@ -27,19 +27,19 @@ set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
 
 find_package(asio             REQUIRED)
 
-if (ECAL_CORE_CONFIG_INIFILE)
+if (ECALCORE_CONFIG_INIFILE)
   find_package(simpleini      REQUIRED)
 endif()
 
-if (ECAL_CORE_COMMAND_LINE)
+if (ECALCORE_COMMAND_LINE)
   find_package(tclap          REQUIRED)
 endif()
 
-if (ECAL_CORE_TRANSPORT_TCP)
+if (ECALCORE_TRANSPORT_TCP)
   find_package(tcp_pubsub     REQUIRED)
 endif()
 
-if (ECAL_CORE_NPCAP_SUPPORT)
+if (ECALCORE_NPCAP_SUPPORT)
   find_package(udpcap         REQUIRED)
 endif()
 
@@ -77,7 +77,7 @@ set(ecal_config_src
 ######################################
 # io/mtx
 ######################################
-if(ECAL_CORE_REGISTRATION_SHM OR ECAL_CORE_TRANSPORT_SHM)
+if(ECALCORE_REGISTRATION_SHM OR ECALCORE_TRANSPORT_SHM)
   set(ecal_io_mtx_src
       src/io/mtx/ecal_named_mutex.cpp
       src/io/mtx/ecal_named_mutex.h
@@ -106,7 +106,7 @@ endif()
 ######################################
 # io/shm
 ######################################
-if(ECAL_CORE_REGISTRATION_SHM OR ECAL_CORE_TRANSPORT_SHM)
+if(ECALCORE_REGISTRATION_SHM OR ECALCORE_TRANSPORT_SHM)
   set(ecal_io_shm_src
       src/io/shm/ecal_memfile.cpp
       src/io/shm/ecal_memfile_db.cpp
@@ -151,7 +151,7 @@ set(ecal_io_udp_fragmentation_src
 )
 
 # io/udp/sendreceive (npcap)
-if(ECAL_CORE_NPCAP_SUPPORT)
+if(ECALCORE_NPCAP_SUPPORT)
 set(ecal_io_udp_sendreceive_src_npcap 
    src/io/udp/sendreceive/udp_receiver_npcap.cpp
    src/io/udp/sendreceive/udp_receiver_npcap.h
@@ -209,7 +209,7 @@ set(ecal_logging_src
 set(ecal_pub_src
     src/pubsub/ecal_publisher.cpp
 )
-if(ECAL_CORE_PUBLISHER)
+if(ECALCORE_PUBLISHER)
   list(APPEND ecal_pub_src
       src/pubsub/ecal_pubgate.cpp
       src/pubsub/ecal_pubgate.h
@@ -219,7 +219,7 @@ endif()
 set(ecal_sub_src
     src/pubsub/ecal_subscriber.cpp
 )
-if(ECAL_CORE_SUBSCRIBER)
+if(ECALCORE_SUBSCRIBER)
   list(APPEND ecal_sub_src
       src/pubsub/ecal_subgate.cpp
       src/pubsub/ecal_subgate.h
@@ -229,7 +229,7 @@ endif()
 ######################################
 # readwrite
 ######################################
-if(ECAL_CORE_PUBLISHER)
+if(ECALCORE_PUBLISHER)
   set(ecal_writer_src
       src/readwrite/ecal_writer.cpp
       src/readwrite/ecal_writer.h
@@ -238,20 +238,20 @@ if(ECAL_CORE_PUBLISHER)
       src/readwrite/ecal_writer_data.h
       src/readwrite/ecal_writer_info.h
   )
-  if(ECAL_CORE_TRANSPORT_UDP)
+  if(ECALCORE_TRANSPORT_UDP)
     list(APPEND ecal_writer_src
         src/readwrite/udp/ecal_writer_udp_mc.cpp
         src/readwrite/udp/ecal_writer_udp_mc.h
     )
   endif()
-  if(ECAL_CORE_TRANSPORT_TCP)
+  if(ECALCORE_TRANSPORT_TCP)
     list(APPEND ecal_writer_src
         src/readwrite/tcp/ecal_tcp_pubsub_logger.h
         src/readwrite/tcp/ecal_writer_tcp.cpp
         src/readwrite/tcp/ecal_writer_tcp.h
     )
   endif()
-  if(ECAL_CORE_TRANSPORT_SHM)
+  if(ECALCORE_TRANSPORT_SHM)
     list(APPEND ecal_writer_src
         src/readwrite/shm/ecal_writer_shm.cpp
         src/readwrite/shm/ecal_writer_shm.h
@@ -259,25 +259,25 @@ if(ECAL_CORE_PUBLISHER)
   endif()
 endif()
 
-if(ECAL_CORE_SUBSCRIBER)
+if(ECALCORE_SUBSCRIBER)
   set(ecal_reader_src
       src/readwrite/ecal_reader.cpp
       src/readwrite/ecal_reader.h
       src/readwrite/ecal_reader_layer.h
   )
-  if(ECAL_CORE_TRANSPORT_UDP)
+  if(ECALCORE_TRANSPORT_UDP)
     list(APPEND ecal_reader_src
         src/readwrite/udp/ecal_reader_udp_mc.cpp
         src/readwrite/udp/ecal_reader_udp_mc.h
     )
   endif()
-  if(ECAL_CORE_TRANSPORT_TCP)
+  if(ECALCORE_TRANSPORT_TCP)
     list(APPEND ecal_reader_src
         src/readwrite/tcp/ecal_reader_tcp.cpp
         src/readwrite/tcp/ecal_reader_tcp.h
     )
   endif()
-  if(ECAL_CORE_TRANSPORT_SHM)
+  if(ECALCORE_TRANSPORT_SHM)
     list(APPEND ecal_reader_src
         src/readwrite/shm/ecal_reader_shm.cpp
         src/readwrite/shm/ecal_reader_shm.h
@@ -288,14 +288,14 @@ endif()
 ######################################
 # registration
 ######################################
-if (ECAL_CORE_REGISTRATION)
+if (ECALCORE_REGISTRATION)
   set(ecal_registration_src
       src/registration/ecal_registration_provider.cpp
       src/registration/ecal_registration_provider.h
       src/registration/ecal_registration_receiver.cpp
       src/registration/ecal_registration_receiver.h
   )
-  if(ECAL_CORE_REGISTRATION_SHM)
+  if(ECALCORE_REGISTRATION_SHM)
     list(APPEND ecal_registration_src
         src/registration/ecal_registration_receiver_shm.cpp
         src/registration/ecal_registration_receiver_shm.h
@@ -355,7 +355,7 @@ set(ecal_serialization_src
 ######################################
 # service
 ######################################
-if(ECAL_CORE_SERVICE)
+if(ECALCORE_SERVICE)
   set(ecal_service_src
       src/service/ecal_clientgate.cpp
       src/service/ecal_clientgate.h
@@ -378,7 +378,7 @@ endif()
 set(ecal_time_src
     src/time/ecal_time.cpp
 )
-if(ECAL_CORE_TIMEPLUGIN)
+if(ECALCORE_TIMEPLUGIN)
   list(APPEND ecal_time_src
       src/time/ecal_timegate.cpp
       src/time/ecal_timegate.h
@@ -393,7 +393,7 @@ set(ecal_util_src
     src/util/ecal_thread.h
     src/util/getenvvar.h
 )
-if (ECAL_CORE_COMMAND_LINE)
+if (ECALCORE_COMMAND_LINE)
   list(APPEND ecal_util_src
       src/util/advanced_tclap_output.cpp
       src/util/advanced_tclap_output.h
@@ -588,18 +588,18 @@ target_compile_definitions(${PROJECT_NAME}
 )
 
 set(ECAL_CORE_FEATURES
-  ECAL_CORE_CONFIG_INIFILE
-  ECAL_CORE_COMMAND_LINE
-  ECAL_CORE_REGISTRATION
-  ECAL_CORE_PUBLISHER
-  ECAL_CORE_SUBSCRIBER
-  ECAL_CORE_SERVICE
-  ECAL_CORE_TIMEPLUGIN
-  ECAL_CORE_REGISTRATION_SHM
-  ECAL_CORE_TRANSPORT_UDP
-  ECAL_CORE_TRANSPORT_TCP
-  ECAL_CORE_TRANSPORT_SHM
-  ECAL_CORE_NPCAP_SUPPORT
+  ECALCORE_CONFIG_INIFILE
+  ECALCORE_COMMAND_LINE
+  ECALCORE_REGISTRATION
+  ECALCORE_PUBLISHER
+  ECALCORE_SUBSCRIBER
+  ECALCORE_SERVICE
+  ECALCORE_TIMEPLUGIN
+  ECALCORE_REGISTRATION_SHM
+  ECALCORE_TRANSPORT_UDP
+  ECALCORE_TRANSPORT_TCP
+  ECALCORE_TRANSPORT_SHM
+  ECALCORE_NPCAP_SUPPORT
 )
 
 foreach(CORE_FEATURE ${ECAL_CORE_FEATURES})
@@ -611,35 +611,35 @@ foreach(CORE_FEATURE ${ECAL_CORE_FEATURES})
   endif()
 endforeach()
 
-if(ECAL_CORE_CONFIG_INIFILE)
+if(ECALCORE_CONFIG_INIFILE)
   target_link_libraries(${PROJECT_NAME}
     PRIVATE
       simpleini::simpleini
   )
 endif()
 
-if(ECAL_CORE_COMMAND_LINE)
+if(ECALCORE_COMMAND_LINE)
   target_link_libraries(${PROJECT_NAME}
     PRIVATE
       tclap::tclap
   )
 endif()
 
-if(ECAL_CORE_SERVICE)
+if(ECALCORE_SERVICE)
   target_link_libraries(${PROJECT_NAME}
     PRIVATE
       ecal_service
   )
 endif()
 
-if(ECAL_CORE_TRANSPORT_TCP)
+if(ECALCORE_TRANSPORT_TCP)
   target_link_libraries(${PROJECT_NAME}
     PRIVATE
       tcp_pubsub::tcp_pubsub
   )
 endif()
 
-if(ECAL_CORE_NPCAP_SUPPORT)
+if(ECALCORE_NPCAP_SUPPORT)
   target_link_libraries(${PROJECT_NAME}
     PRIVATE
       udpcap::udpcap
