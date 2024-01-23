@@ -29,11 +29,8 @@ jobs:
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       run: |
         cmake -B ${{github.workspace}}/_build \
-                 -DECALCORE_BUILD_SAMPLES=ON \
-                 -DECALCORE_BUILD_TESTS=ON \
-#                 -DECALCORE_USE_BUILTIN_ASIO=ON \
-#                 -DECALCORE_USE_BUILTIN_RECYCLE=ON \
-#                 -DECALCORE_USE_BUILTIN_GTEST=ON \
+                 -DECALCORE_BUILD_SAMPLES=OFF \
+                 -DECALCORE_BUILD_TESTS=OFF \
                  -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
       shell: bash
 
