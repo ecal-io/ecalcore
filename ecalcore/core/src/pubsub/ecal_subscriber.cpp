@@ -1,0 +1,333 @@
+/* ========================= eCAL LICENSE =================================
+ *
+ * Copyright (C) 2016 - 2019 Continental Corporation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * ========================= eCAL LICENSE =================================
+*/
+
+/**
+ * @brief  common data subscriber for eCAL
+**/
+
+#if ECAL_CORE_SUBSCRIBER
+
+#include <ecal/ecal.h>
+
+#include "ecal_globals.h"
+#include "readwrite/ecal_reader.h"
+
+#include <sstream>
+#include <iostream>
+#include <utility>
+
+
+namespace eCAL
+{
+  CSubscriber::CSubscriber() :
+    m_datareader(nullptr),
+    m_created(false),
+    m_initialized(false)
+  {
+  }
+
+  CSubscriber::CSubscriber(const std::string& topic_name_, const SDataTypeInformation& topic_info_)
+    : CSubscriber()
+  {
+    Create(topic_name_, topic_info_);
+  }
+
+  CSubscriber::CSubscriber(const std::string& topic_name_)
+    : CSubscriber(topic_name_, SDataTypeInformation{})
+  {}
+
+  CSubscriber::~CSubscriber()
+  {
+    Destroy();
+  }
+
+  CSubscriber::CSubscriber(CSubscriber&& rhs) noexcept :
+    m_datareader(rhs.m_datareader),
+    m_created(rhs.m_created),
+    m_initialized(rhs.m_initialized)
+  {
+    rhs.m_created     = false;
+    rhs.m_initialized = false;
+  }
+
+  CSubscriber& CSubscriber::operator=(CSubscriber&& rhs) noexcept
+  {
+    m_datareader      = std::move(rhs.m_datareader);
+
+    m_created         = rhs.m_created;
+    m_initialized     = rhs.m_initialized;
+
+    rhs.m_created     = false;
+    rhs.m_initialized = false;
+
+    return *this;
+  }
+
+  bool CSubscriber::Create(const std::string& topic_name_, const SDataTypeInformation& topic_info_)
+  {
+    if (m_created)              return(false);
+    if (g_globals() == nullptr) return(false);
+    if (topic_name_.empty())    return(false);
+
+    // initialize globals
+    if (g_globals()->IsInitialized(Init::Subscriber) == 0)
+    {
+      g_globals()->Initialize(Init::Subscriber);
+      m_initialized = true;
+    }
+
+    // create data reader
+    m_datareader = std::make_shared<CDataReader>();
+    // create it
+    if (!m_datareader->Create(topic_name_, topic_info_))
+    {
+#ifndef NDEBUG
+      // log it
+      if (g_log() != nullptr) g_log()->Log(log_level_debug1, std::string(topic_name_ + "::CSubscriber::Create - FAILED"));
+#endif
+      return(false);
+    }
+#ifndef NDEBUG
+    // log it
+    if (g_log() != nullptr) g_log()->Log(log_level_debug1, std::string(topic_name_ + "::CSubscriber::Create - SUCCESS"));
+#endif
+    // register to subscriber gateway for publisher memory file receive thread
+    g_subgate()->Register(topic_name_, m_datareader);
+
+    // we made it :-)
+    m_created = true;
+
+    return(m_created);
+  }
+
+  bool CSubscriber::Destroy()
+  {
+    if(!m_created)             return(false);
+    if(g_globals() == nullptr) return(false);
+
+    // remove receive callback
+    RemReceiveCallback();
+
+    // first unregister data reader
+    if(g_subgate() != nullptr) g_subgate()->Unregister(m_datareader->GetTopicName(), m_datareader);
+#ifndef NDEBUG
+    // log it
+    if (g_log() != nullptr) g_log()->Log(log_level_debug1, std::string(m_datareader->GetTopicName() + "::CSubscriber::Destroy"));
+#endif
+
+    // destroy local data reader
+    m_datareader->Destroy();
+
+    // free datareader
+    m_datareader.reset();
+    
+    // we made it :-)
+    m_created = false;
+
+    // if we initialize the globals then we finalize 
+    // here to decrease reference counter
+    if (m_initialized)
+    {
+      g_globals()->Finalize(Init::Subscriber);
+      m_initialized = false;
+    }
+
+    return(true);
+  }
+
+  bool CSubscriber::SetID(const std::set<long long>& id_set_)
+  {
+    if (m_datareader == nullptr) return(false);
+    m_datareader->SetID(id_set_);
+    return(true);
+  }
+
+  bool CSubscriber::SetAttribute(const std::string& attr_name_, const std::string& attr_value_)
+  {
+    if(m_datareader == nullptr) return false;
+    return m_datareader->SetAttribute(attr_name_, attr_value_);
+  }
+
+  bool CSubscriber::ClearAttribute(const std::string& attr_name_)
+  {
+    if(m_datareader == nullptr) return false;
+    return m_datareader->ClearAttribute(attr_name_);
+  }
+
+  bool CSubscriber::ReceiveBuffer(std::string& buf_, long long* time_ /* = nullptr */, int rcv_timeout_ /* = 0 */) const
+  {
+    if (!m_created) return(false);
+    return(m_datareader->Receive(buf_, time_, rcv_timeout_));
+  }
+
+  bool CSubscriber::AddReceiveCallback(ReceiveCallbackT callback_)
+  {
+    if(m_datareader == nullptr) return(false);
+    RemReceiveCallback();
+    return(m_datareader->AddReceiveCallback(std::move(callback_)));
+  }
+
+  bool CSubscriber::RemReceiveCallback()
+  {
+    if(m_datareader == nullptr) return(false);
+    return(m_datareader->RemReceiveCallback());
+  }
+
+  bool CSubscriber::AddEventCallback(eCAL_Subscriber_Event type_, SubEventCallbackT callback_)
+  {
+    if (m_datareader == nullptr) return(false);
+    RemEventCallback(type_);
+    return(m_datareader->AddEventCallback(type_, callback_));
+  }
+
+  bool CSubscriber::RemEventCallback(eCAL_Subscriber_Event type_)
+  {
+    if (m_datareader == nullptr) return(false);
+    return(m_datareader->RemEventCallback(type_));
+  }
+
+  std::string CSubscriber::GetTopicName() const
+  {
+    if(m_datareader == nullptr) return("");
+    return(m_datareader->GetTopicName());
+  }
+  
+  SDataTypeInformation CSubscriber::GetDataTypeInformation() const
+  {
+    if (m_datareader == nullptr) return(SDataTypeInformation{});
+    return(m_datareader->GetDataTypeInformation());
+  }
+
+  std::string CSubscriber::Dump(const std::string& indent_ /* = "" */) const
+  {
+    std::stringstream out;
+
+    out << indent_ << "----------------------" << std::endl;
+    out << indent_ << " class CSubscriber    " << std::endl;
+    out << indent_ << "----------------------" << std::endl;
+    out << indent_ << "m_created:            " << m_created << std::endl;
+    if((m_datareader != nullptr) && m_datareader->IsCreated()) out << indent_ << m_datareader->Dump("    ");
+    out << std::endl;
+
+    return(out.str());
+  }
+}
+
+#else // ECAL_CORE_SUBSCRIBER
+
+#include <ecal/ecal.h>
+
+namespace eCAL
+{
+  CSubscriber::CSubscriber() :
+    m_datareader(nullptr),
+    m_created(false),
+    m_initialized(false)
+  {
+  }
+
+  CSubscriber::CSubscriber(const std::string& topic_name_, const SDataTypeInformation& topic_info_)
+    : CSubscriber()
+  {}
+
+  CSubscriber::CSubscriber(const std::string& topic_name_)
+    : CSubscriber(topic_name_, SDataTypeInformation{})
+  {}
+
+  CSubscriber::~CSubscriber()
+  {
+  }
+
+  CSubscriber::CSubscriber(CSubscriber&& rhs) noexcept :
+    m_datareader(rhs.m_datareader),
+    m_created(rhs.m_created),
+    m_initialized(rhs.m_initialized)
+  {
+  }
+
+  CSubscriber& CSubscriber::operator=(CSubscriber&& rhs) noexcept
+  {
+    m_datareader = std::move(rhs.m_datareader);
+
+    m_created         = rhs.m_created;
+    m_initialized     = rhs.m_initialized;
+
+    rhs.m_created     = false;
+    rhs.m_initialized = false;
+
+    return *this;
+  }
+
+  bool CSubscriber::Create(const std::string& topic_name_, const SDataTypeInformation& topic_info_)
+  {
+    return false;
+  }
+
+  bool CSubscriber::Destroy()
+  {
+    return false;
+  }
+
+  bool CSubscriber::SetID(const std::set<long long>& id_set_)
+  {
+    return false;
+  }
+
+  bool CSubscriber::SetAttribute(const std::string& attr_name_, const std::string& attr_value_)
+  {
+    return false;
+  }
+
+  bool CSubscriber::ClearAttribute(const std::string& attr_name_)
+  {
+    return false;
+  }
+
+  bool CSubscriber::ReceiveBuffer(std::string& buf_, long long* time_ /* = nullptr */, int rcv_timeout_ /* = 0 */) const
+  {
+    return false;
+  }
+
+  bool CSubscriber::AddReceiveCallback(ReceiveCallbackT callback_)
+  {
+    return false;
+  }
+
+  bool CSubscriber::RemReceiveCallback()
+  {
+    return false;
+  }
+
+  std::string CSubscriber::GetTopicName() const
+  {
+    return "";
+  }
+
+  SDataTypeInformation CSubscriber::GetDataTypeInformation() const
+  {
+    return(SDataTypeInformation{});
+  }
+
+  std::string CSubscriber::Dump(const std::string& indent_ /* = "" */) const
+  {
+    return "";
+  }
+}
+
+#endif // ECAL_CORE_SUBSCRIBER
