@@ -18,7 +18,7 @@
 
 cmake_minimum_required(VERSION 3.13)
 
-if(ECALCORE_BUILD_ECAL_TESTS)
+if(ECALCORE_BUILD_TESTS)
 
   enable_testing()
   add_subdirectory(expmap_test)
@@ -33,14 +33,14 @@ if(ECALCORE_BUILD_ECAL_TESTS)
     add_subdirectory(core_test)
     add_subdirectory(pubsub_test)
     add_subdirectory(serialization_test)
-    if(ECALCORE_BUILD_ECAL_TESTS_PROTOBUF)
+    if(ECALCORE_BUILD_TESTS_PROTOBUF)
       add_subdirectory(pubsub_proto_test)
     endif()
   endif()
 
   if(ECALCORE_SERVICE)
     add_subdirectory(clientserver_test)
-    if(ECALCORE_BUILD_ECAL_TESTS_PROTOBUF)
+    if(ECALCORE_BUILD_TESTS_PROTOBUF)
       add_subdirectory(clientserver_proto_test)
     endif()
   endif()

@@ -19,6 +19,8 @@ cmake_minimum_required(VERSION 3.10)
 
 project(eCAL_samples VERSION "${ECAL_VERSION_STRING}")
 
+if(ECALCORE_BUILD_SAMPLES)
+
 # --------------------------------------------------------
 # c samples
 # --------------------------------------------------------
@@ -102,4 +104,6 @@ if(ECALCORE_SERVICE)
     add_subdirectory(cpp/services/ping_client)
     add_subdirectory(cpp/services/ping_server)
   endif()
+endif()
+
 endif()
