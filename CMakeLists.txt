@@ -45,32 +45,32 @@ option(ECALCORE_BUILD_ECAL_TESTS_PROTOBUF                "Build the eCAL google 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # core internal feature configuration (adapt to your needs)
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------
-option(ECALCORE_CONFIG_INIFILE                          "Enables to configure eCAL via ecal.ini file"                                                           OFF)
-option(ECALCORE_COMMAND_LINE                            "Enables eCAL application cmd line interfaces"                                                          OFF)
-option(ECALCORE_REGISTRATION                            "Enables the eCAL registration layer"                                                                    ON)
-option(ECALCORE_PUBLISHER                               "Enables the eCAL publisher functionality"                                                               ON)
-option(ECALCORE_SUBSCRIBER                              "Enables the eCAL subscriber functionality"                                                              ON)
-option(ECALCORE_SERVICE                                 "Enables the eCAL server/client functionality"                                                          OFF)
-option(ECALCORE_TIMEPLUGIN                              "Enables the eCAL time plugin functionality"                                                            OFF)
+option(ECALCORE_CONFIG_INIFILE                           "Enables to configure eCAL via ecal.ini file"                                                           OFF)
+option(ECALCORE_COMMAND_LINE                             "Enables eCAL application cmd line interfaces"                                                          OFF)
+option(ECALCORE_REGISTRATION                             "Enables the eCAL registration layer"                                                                    ON)
+option(ECALCORE_PUBLISHER                                "Enables the eCAL publisher functionality"                                                               ON)
+option(ECALCORE_SUBSCRIBER                               "Enables the eCAL subscriber functionality"                                                              ON)
+option(ECALCORE_SERVICE                                  "Enables the eCAL server/client functionality"                                                          OFF)
+option(ECALCORE_TIMEPLUGIN                               "Enables the eCAL time plugin functionality"                                                            OFF)
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # core registration layer options (change with care)
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------
-option(ECALCORE_REGISTRATION_SHM                        "Enables the eCAL registration layer over shared memory"                                                OFF)
+option(ECALCORE_REGISTRATION_SHM                         "Enables the eCAL registration layer over shared memory"                                                OFF)
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # core transport layer options (change with care)
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------
-option(ECALCORE_TRANSPORT_UDP                           "Enables the eCAL to transport payload via UDP multicast"                                                ON)
-option(ECALCORE_TRANSPORT_TCP                           "Enables the eCAL to transport payload via TCP"                                                         OFF)
-option(ECALCORE_TRANSPORT_SHM                           "Enables the eCAL to transport payload via local shared memory"                                         OFF)
+option(ECALCORE_TRANSPORT_UDP                            "Enables the eCAL to transport payload via UDP multicast"                                                ON)
+option(ECALCORE_TRANSPORT_TCP                            "Enables the eCAL to transport payload via TCP"                                                         OFF)
+option(ECALCORE_TRANSPORT_SHM                            "Enables the eCAL to transport payload via local shared memory"                                         OFF)
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # third party library options (do not change)
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------
-option(ECALCORE_THIRDPARTY_BUILD_ASIO                   "Build asio with eCAL"                                                                                   ON)
-option(ECALCORE_THIRDPARTY_BUILD_CMAKEFUNCTIONS         "Build CMakeFunctions with eCAL"                                                                         ON)
-option(ECALCORE_NPCAP_SUPPORT                           "Enable the eCAL Npcap Receiver (i.e. the Win10 performance fix)"                                       OFF)
+option(ECALCORE_THIRDPARTY_BUILD_ASIO                    "Build asio with eCAL"                                                                                   ON)
+option(ECALCORE_THIRDPARTY_BUILD_CMAKEFUNCTIONS          "Build CMakeFunctions with eCAL"                                                                         ON)
+option(ECALCORE_NPCAP_SUPPORT                            "Enable the eCAL Npcap Receiver (i.e. the Win10 performance fix)"                                       OFF)
 
 cmake_dependent_option(ECAL_THIRDPARTY_BUILD_GTEST       "Build gtest with eCAL"               ON   "ECALCORE_BUILD_ECAL_TESTS"                                 OFF)
 cmake_dependent_option(ECAL_THIRDPARTY_BUILD_TCP_PUBSUB  "Build tcp_pubsub library with eCAL"  ON   "ECALCORE_TRANSPORT_TCP"                                    OFF)
