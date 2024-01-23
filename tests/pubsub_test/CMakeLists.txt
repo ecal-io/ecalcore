@@ -29,7 +29,7 @@ set(pubsub_test_src
 ecal_add_gtest(${PROJECT_NAME} ${pubsub_test_src})
 target_link_libraries(${PROJECT_NAME}
   PRIVATE
-    eCAL::core
+    ecalcore
     Threads::Threads)
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_14)
 ecal_install_gtest(${PROJECT_NAME})

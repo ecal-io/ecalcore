@@ -46,7 +46,7 @@ endif()
 
 ecal_add_gtest(${PROJECT_NAME} ${memfile_test_src} ${memfile_test_os_src})
 
-target_include_directories(${PROJECT_NAME} PRIVATE $<TARGET_PROPERTY:eCAL::core,INCLUDE_DIRECTORIES>)
+target_include_directories(${PROJECT_NAME} PRIVATE $<TARGET_PROPERTY:ecalcore,INCLUDE_DIRECTORIES>)
 
 target_link_libraries(${PROJECT_NAME} 
   PRIVATE
